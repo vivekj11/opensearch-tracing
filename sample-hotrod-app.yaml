@@ -1,0 +1,52 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-hot-rod
+  name: jaeger-hot-rod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-hot-rod
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jaeger-hot-rod
+    spec:
+      containers:
+        - args:
+            - all  
+          env:
+            - name: JAEGER_AGENT_HOST
+              value: jaeger-agent.default.svc
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+       
+          image: jaegertracing/example-hotrod:latest
+          name: jaeger-hot-rod
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jaeger-hot-rod
+  name: jaeger-hot-rod
+spec:
+  type: NodePort
+  ports:
+    - name: "8080"
+      port: 8080
+  selector:
+    app: jaeger-hot-rod
+
+

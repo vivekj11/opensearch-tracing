@@ -1,0 +1,47 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-agent
+  name: jaeger-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-agent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jaeger-agent
+    spec:
+      containers:
+        - args:
+            - --reporter.grpc.host-port=otel-collector.default.svc:14250        
+          image: jaegertracing/jaeger-agent:latest
+          name: jaeger-agent
+          ports:
+            - containerPort: 6831
+      restartPolicy: Always
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jaeger-agent
+  name: jaeger-agent
+spec:
+  clusterIP: None
+  ports:
+    - name: "6831"
+      port: 6831
+      targetPort: 6831
+  selector:
+    app: jaeger-agent
+
+
