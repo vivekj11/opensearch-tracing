@@ -27,8 +27,8 @@ data:
         - opensearch:
             hosts: [ "https://search-tracing-os-lvqzwfpd4pxzrhqh6sd2gz5r4y.ap-south-1.es.amazonaws.com" ]
             aws_sigv4: false
-            username: "admin"
-            password: "Zxc@7890"
+            username: "xyz"
+            password: "xyz"
             trace_analytics_raw: true
     service-map-pipeline:
       delay: "100"
@@ -41,8 +41,8 @@ data:
         - opensearch:
             hosts: [ "https://search-tracing-os-lvqzwfpd4pxzrhqh6sd2gz5r4y.ap-south-1.es.amazonaws.com" ]
             aws_sigv4: false
-            username: "admin"
-            password: "Zxc@7890"
+            username: "xyz"
+            password: "xyz"
             trace_analytics_service_map: true
 
   data-prepper-config.yaml: |
